@@ -1,0 +1,100 @@
+.student {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 140px);
+  margin: 0 auto;
+  padding-top: 110px;
+  padding-bottom: 100px;
+
+}
+
+.student__container {
+  margin: 66px 0 100px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.student__profile {
+  text-align: start;
+}
+
+.student__name {
+  margin: 0 0 18px;
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 58px;
+  letter-spacing: -0.04em;
+}
+
+.student__description {
+  margin: 0 0 26px;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 20px;
+  color: #111111;
+}
+
+.student__about {
+  max-width: 600px;
+  margin: 0 0 90px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.student__github {
+  margin: 0;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000;
+  align-self: flex-end;
+  justify-self: flex-end;
+}
+
+.student__photo {
+  width: 270px;
+  border-radius: 10px;
+}
+
+.student__portfolio {
+  margin: 0;
+  padding: 0;
+  align-self: flex-start;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 20px;
+  color: #A0A0A0;
+}
+
+.student__list {
+  margin: 30px 0 0;
+  width: 100%;
+}
+
+.student__item {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #E6E6E6;
+}
+
+.student__item:last-of-type {
+  border-bottom: none;
+}
+
+.student__link {
+  display: flex;
+  justify-content: space-between;
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 60px;
+  letter-spacing: -0.04em;
+  color: #000;
+  width: 100%;
+}
+
+.student__icon {
+  line-height: 60px;
+}

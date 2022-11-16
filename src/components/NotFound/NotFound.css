@@ -1,0 +1,28 @@
+.not-found {
+  padding-top: 33%;
+}
+
+.not-found__code {
+  font-weight: 400;
+  font-size: 140px;
+  line-height: 169px;
+  margin: 0;
+  padding: 0;
+}
+
+.not-found__text {
+  margin-bottom: 184px;
+  padding: 0;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+}
+
+.not-found__btn {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  background-color: transparent;
+  border: none;
+  color: #3456F3;
+}
