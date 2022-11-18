@@ -2,9 +2,9 @@
 @import url("./vendor/fonts/inter/inter.css");
 
 body {
-  background-color: #fff;
+  background-color: #202020;
   font-family: "Inter", Arial, sans-serif;
-  color: #000;
+  color: #fff;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

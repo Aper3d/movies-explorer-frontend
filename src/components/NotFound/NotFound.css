@@ -1,5 +1,5 @@
 .not-found {
-  padding-top: 33%;
+  padding-top: 36vh;
 }
 
 .not-found__code {
@@ -11,7 +11,6 @@
 }
 
 .not-found__text {
-  margin-bottom: 184px;
   padding: 0;
   font-weight: 400;
   font-size: 16px;
@@ -25,4 +24,5 @@
   background-color: transparent;
   border: none;
   color: #3456F3;
+  margin-top: 33vh;
 }

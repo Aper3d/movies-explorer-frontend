@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 function Login() {
   return (
     <form className='register-form'>
-      <div className='register-form__icon'></div>
+      <Link className='header__logo btn__hover' to='/' />
       <h2 className='register-form__title'>Рады видеть</h2>
       <span className='register-form__name'>E-mail</span>
       <input type='email' className='register-form__input' placeholder='Введите e-mail' />

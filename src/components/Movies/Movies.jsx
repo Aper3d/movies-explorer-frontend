@@ -6,7 +6,7 @@ function Movies() {
     <main className='movies'>
       <SearchForm />
       <MoviesCardList />
-      <button className='more-movies btn__hover'>Еще</button>
+      <button className='more-movies btn__hover'>Ещё</button>
     </main>
   )
 }

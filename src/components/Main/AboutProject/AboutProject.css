@@ -1,15 +1,16 @@
 .about {
   display: flex;
   flex-direction: column;
-  width: calc(100% - 140px);
   margin: 0 auto;
-  padding-top: 100px;
-  padding-bottom: 110px;
+  padding: 100px 70px 110px 70px;
 }
 
 .about__table {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-areas:
+    "title-1 title-2"
+    "text-1 text-2";
+  grid-template-columns: 1fr 1fr;
   margin: 70px auto 110px;
   padding: 0;
   gap: 26px 40px;
@@ -23,6 +24,11 @@
   font-size: 20px;
   line-height: 24px;
   letter-spacing: -0.04em;
+  grid-area: title-2;
+}
+
+.about__table-title:first-of-type {
+  grid-area: title-1;
 }
 
 .about__table-description {
@@ -31,11 +37,16 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 20px;
+  grid-area: text-2;
+}
+
+.about__table-description:first-of-type {
+  grid-area: text-1;
 }
 
 .about__line {
   display: grid;
-  grid-template-columns: 20% 80%;
+  grid-template-columns: 30% 70%;
   align-items: center;
   text-align: center;
 }
@@ -46,18 +57,76 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
-  background-color: #F2F2F2;
+  background-color: #303030;
   padding-top: 10px;
   padding-bottom: 10px;
 }
 
 .about__line-title_green {
-  background-color: #2BE080;
+  background-color: #3DDC84;
+  color: #000;
 }
 
 .about__line-description {
   font-weight: 500;
   font-size: 14px;
   line-height: 17px;
-  color: #A0A0A0;
+  color: #8B8B8B;
+}
+
+@media screen and (max-width: 820px) {
+  .nav__btn {
+    display: block;
+  }
+
+  .nav__list-deck {
+    display: none;
+  }
+
+  .nav__icon {
+    margin-top: auto;
+  }
+}
+
+@media screen and (max-width: 820px) {
+  .about {
+    padding: 90px 50px;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .about {
+    padding: 70px 18px;
+  }
+
+  .about__table {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto 60px;
+    gap: 0;
+  }
+
+  .about__table-title {
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: -0.04em;
+    margin: 56px 0 16px;
+  }
+
+  .about__table-description {
+    font-size: 11px;
+    line-height: 16px;
+    margin: 0;
+  }
+
+  .about__line-title {
+    font-size: 11px;
+    line-height: 13.31px;
+  }
+
+  .about__line-description {
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+  }
 }

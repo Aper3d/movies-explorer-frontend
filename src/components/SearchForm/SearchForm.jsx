@@ -8,7 +8,7 @@ function MovieSearch() {
       <div className='search__container'>
         <input className='search__input' name='search' type='text' required autoComplete='off'
           placeholder='Фильм' />
-        <button className='search__btn btn__hover' type='submit' />
+        <button className='search__btn btn__hover' type='submit'>Найти</button>
       </div>
       <FilterCheckbox />
     </form>

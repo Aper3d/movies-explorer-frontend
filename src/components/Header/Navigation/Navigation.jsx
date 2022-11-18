@@ -1,6 +1,5 @@
 import './Navigation.css';
 import { NavLink, useLocation } from 'react-router-dom';
-import icon from '../../../images/profile-icon.svg';
 import { useState } from 'react';
 
 function Navigation() {
@@ -17,7 +16,6 @@ function Navigation() {
     path === '/' ?
       <nav className='nav'>
         <ul className='list-reset nav__list ' >
-          <li><NavLink className='nav__link link__hover' to='/movies'>Фильмы</NavLink></li>
           <li><NavLink className='nav__link link__hover' to='/sign-up'>Регистрация</NavLink></li>
           <li><NavLink className='nav__link nav__link_green link__hover' to='/sign-in'> Войти</NavLink></li>
         </ul>
@@ -27,22 +25,22 @@ function Navigation() {
           <button type='button' className={`nav__btn ${isNavOpened && 'nav__btn_close'}`} onClick={handleNavClick} />
           <nav className='nav nav__mobile'>
             <ul className='list-reset nav__list-mobile'>
-              <li><NavLink onClick={handleOffNavClick} className='nav__link-mobile' to='/'>Главная</NavLink></li>
+              <li><NavLink onClick={handleOffNavClick} className='nav__link-mobile' to='/' end>Главная</NavLink></li>
               <li><NavLink onClick={handleOffNavClick} className='nav__link-mobile' to='/movies'>Фильмы</NavLink></li>
               <li><NavLink onClick={handleOffNavClick} className='nav__link-mobile' to='/saved-movies'>Сохраненные фильмы</NavLink></li>
               <li><NavLink onClick={handleOffNavClick} className='nav__link-mobile' to='/profile'>
-                <img className='nav__icon' src={icon} alt='Профиль' /></NavLink></li>
+                Аккаунт<div className='nav__icon' div /></NavLink></li>
             </ul>
           </nav>
         </>
         : <>
           <button type='button' className={`nav__btn ${isNavOpened && 'nav__btn_close'}`} onClick={handleNavClick} />
           <nav className='nav'>
-            <ul className='list-reset nav__list ' >
+            <ul className='list-reset nav__list nav__list-deck ' >
               <li><NavLink className='nav__link link__hover' to='/movies'>Фильмы</NavLink></li>
               <li><NavLink className='nav__link link__hover' to='/saved-movies'>Сохраненные фильмы</NavLink></li>
               <li><NavLink className='nav__link link__hover' to='/profile'>
-                <img className='nav__icon' src={icon} alt='Профиль' /></NavLink></li>
+                Аккаунт<div className='nav__icon' div /></NavLink></li>
             </ul>
           </nav>
         </>
