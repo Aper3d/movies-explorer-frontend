@@ -7,7 +7,7 @@ function MoviesCardList() {
   useEffect(() => {
     moviesApi.getMovies()
       .then(data => {
-        const moviesSlise = data.slice(1, 17)
+        const moviesSlise = data.slice(0, 12)
         setMovies(moviesSlise)
       })
   }, [])
