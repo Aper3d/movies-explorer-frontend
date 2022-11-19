@@ -10,6 +10,7 @@
   align-items: center;
   justify-content: space-between;
   margin-top: 80px;
+  gap: 10px;
 }
 
 .search__input {
@@ -18,7 +19,7 @@
   background: #2F2F2F;
   border-radius: 4px;
   border: none;
-  padding: 15px 22px;
+  padding: 13px 22px;
   font-weight: 400;
   font-size: 14px;
   line-height: 18px;

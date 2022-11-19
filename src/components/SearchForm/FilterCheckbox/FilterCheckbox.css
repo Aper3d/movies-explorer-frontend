@@ -18,8 +18,7 @@
 
 .filter__input_visible {
   position: absolute;
-  background-image: url('../../../images/checkbox-active.svg');
-  transform: rotate(180deg);
+  background-image: url('../../../images/checkbox.svg');
   width: 36px;
   height: 20px;
   left: 0;
@@ -29,7 +28,7 @@
 }
 
 .filter__input_visible_checked {
-  transform: rotate(0);
+  background-image: url('../../../images/checkbox-active.svg');
 }
 
 @media screen and (max-width: 820px) {

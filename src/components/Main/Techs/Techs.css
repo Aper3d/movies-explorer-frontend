@@ -26,10 +26,12 @@
 }
 
 .techs__list {
+  max-width: 700px;
   margin: 100px auto 0;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+  justify-items: center;
   align-items: center;
-  justify-content: center;
   gap: 10px;
 }
 
@@ -77,9 +79,6 @@
 
   .techs__list {
     margin: 50px auto 0;
-    display: grid;
-    grid-template-columns: repeat(2, 90px);
-    justify-items: center;
     gap: 10px;
   }
 }

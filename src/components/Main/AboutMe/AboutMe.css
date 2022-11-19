@@ -12,6 +12,7 @@
   margin: 66px 0 100px;
   display: flex;
   justify-content: space-between;
+  gap: 10px;
 }
 
 .student__profile {
@@ -55,8 +56,10 @@
 
 .student__photo {
   width: 270px;
+  height: 100%;
+  max-width: 38%;
   border-radius: 10px;
-  overflow: hidden;
+  object-fit: cover;
 }
 
 .student__portfolio {
@@ -105,8 +108,19 @@
     width: calc(100% - 100px);
   }
 
-  .student__profile {
-    max-width: 55%;
+  .student__about {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .student__description {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .student__name {
+    font-size: 40px;
+    line-height: 40px;
   }
 }
 
@@ -124,7 +138,8 @@
 
   .student__photo {
     width: 100%;
-    margin-bottom: 40px;
+    max-width: 100%;
+    margin-bottom: 30px;
   }
 
   .student__profile {
