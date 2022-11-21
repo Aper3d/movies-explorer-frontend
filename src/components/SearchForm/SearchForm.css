@@ -32,6 +32,9 @@
   border: none;
   border-radius: 3px;
   color: #fff;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 18px;
 }
 
 @media screen and (max-width: 420px) {
