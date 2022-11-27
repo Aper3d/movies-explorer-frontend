@@ -1,0 +1,17 @@
+.section__title {
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 27px;
+  letter-spacing: -0.04em;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  align-self: start;
+}
+
+.section__line {
+  background-color: #DADADA;
+  height: 1px;
+  width: 100%;
+  margin-top: 23px;
+}

@@ -1,0 +1,64 @@
+.filter {
+  margin: 30px auto 40px;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.filter__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0)
+}
+
+.filter__pseudo-item {
+  box-sizing: border-box;
+  width: 36px;
+  height: 20px;
+  box-shadow: 0px 4px 4px rgba(50, 50, 71, 0.08),
+    0px 4px 8px rgba(50, 50, 71, 0.06);
+  border-radius: 16px;
+  display: flex;
+  padding: 2px;
+  align-items: center;
+  background-color: #2F2F2F;
+  cursor: pointer;
+}
+
+.filter__circle {
+  display: block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #F5F5F5;
+  transition: all 0.2s ease-in-out;
+}
+
+.filter__input:checked+.filter__pseudo-item>.filter__circle {
+  transform: translate(100%);
+  background-color: #3DDC84;
+}
+
+.filter__titile {
+  margin-left: 12px;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+@media screen and (max-width: 820px) {
+  .filter {
+    justify-content: center;
+  }
+
+  .filter__input_visible {
+    top: 0;
+    right: 38.5%;
+  }
+}
