@@ -2,10 +2,10 @@ import checkRes from "./checkRes";
 
 class Auth {
   constructor(options) {
-    this.baseUrl = options.baseUrl;
+    this._url = options.url;
   }
   register = (name, email, password) => {
-    return fetch(`${this.baseUrl}/signup`, {
+    return fetch(`${this._url}/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -16,7 +16,7 @@ class Auth {
   }
 
   authorize = (email, password) => {
-    return fetch(`${this.baseUrl}/signin`, {
+    return fetch(`${this._url}/signin`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -27,7 +27,7 @@ class Auth {
   }
 
   getContent = (token) => {
-    return fetch(`${this.baseUrl}/users/me`, {
+    return fetch(`${this._url}/users/me`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -39,5 +39,5 @@ class Auth {
 }
 
 export const auth = new Auth({
-  baseUrl: 'http://localhost:3000',
+  url: 'https://api.legion3d.students.nomoredomainssbs.ru',
 })
