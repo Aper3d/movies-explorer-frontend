@@ -82,7 +82,5 @@ class MainApi {
 }
 
 export const api = new MainApi({
-  url: 'http://localhost:3000'
+  url: 'https://api.legion3d.students.nomoredomainssbs.ru'
 });
-
-// https://api.legion3d.students.nomoredomainssbs.ru
