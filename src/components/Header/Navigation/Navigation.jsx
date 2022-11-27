@@ -1,10 +1,11 @@
 import './Navigation.css';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
 
-function Navigation() {
-  const path = useLocation().pathname;
+function Navigation({ loggedIn }) {
+
   const [isNavOpened, setIsNavOpened] = useState(false);
+
   function handleNavClick() {
     setIsNavOpened(!isNavOpened);
   };
@@ -13,11 +14,11 @@ function Navigation() {
   };
 
   return (
-    path === '/' ?
+    !loggedIn ?
       <nav className='nav'>
         <ul className='list-reset nav__list ' >
-          <li><NavLink className='nav__link link__hover' to='/sign-up'>Регистрация</NavLink></li>
-          <li><NavLink className='nav__link nav__link_green link__hover' to='/sign-in'> Войти</NavLink></li>
+          <li><NavLink className='nav__link link__hover' to='/signup'>Регистрация</NavLink></li>
+          <li><NavLink className='nav__link nav__link_green link__hover' to='/signin'> Войти</NavLink></li>
         </ul>
       </nav>
       : isNavOpened

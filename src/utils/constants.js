@@ -1,0 +1,17 @@
+export const CONFLICT_ERROR = 'Пользователь с таким email уже существует.';
+export const VALIDATION_ERROR = 'При регистрации пользователя произошла ошибка.';
+export const UNAUTHORIZED_ERROR = 'Вы ввели неправильный логин или пароль.';
+export const SERVER_ERROR = 'На сервере произошла ошибка.';
+export const UNKNOWN_TRAILER_URL = 'https://www.youtube.com';
+export const UNKNOWN_CARD_TEXT = 'Неизвестно';
+export const UNKNOWN_IMAGE_URL = '../images/not-found-img.svg';
+export const SERVER_URL = 'https://api.nomoreparties.co/';
+export const MAX_DURATION_SHORT_FILM = 40;
+export const MOBILE_WIDTH = 480;
+export const LAPTOP_WIDTH = 1280;
+export const LARGE_PAGE_CARDS_COUNT = 12;
+export const LARGE_NEXT_PAGE_CARDS_COUNT = 3;
+export const MEDIUM_PAGE_CARDS_COUNT = 8;
+export const MEDIUM_NEXT_PAGE_CARDS_COUNT = 2;
+export const SMALL_PAGE_CARDS_COUNT = 5;
+export const SMALL_NEXT_PAGE_CARDS_COUNT = 1;

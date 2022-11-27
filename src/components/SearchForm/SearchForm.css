@@ -11,6 +11,13 @@
   justify-content: space-between;
   margin-top: 80px;
   gap: 10px;
+  position: relative;
+}
+
+.search__container span {
+  position: absolute;
+  top: 10%;
+  left: 30%;
 }
 
 .search__input {

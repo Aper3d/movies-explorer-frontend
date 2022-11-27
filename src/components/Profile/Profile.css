@@ -16,29 +16,63 @@
 .profile__container {
   width: 100%;
   display: flex;
-  justify-content: space-between;
-  padding: 16px 0;
+  flex-direction: column;
+  position: relative;
 }
 
-.profile__container_name {
-  border-bottom: 1px solid #424242;
-}
-
-.profile__text {
-  margin: 0;
-  padding: 0;
+.profile__input {
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  text-align: end;
   font-weight: 500;
   font-size: 11px;
   line-height: 13px;
+  padding: 7px 0;
+}
+
+.profile__input:last-of-type {
+  padding-top: 27px;
+  border-top: 1px solid #fff;
+}
+
+.profile__input-label {
+  color: #fff;
+  text-align: start;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 13px;
+  position: relative;
+  top: 22px;
+}
+
+.profile__input-label:last-of-type {
+  top: 42px
 }
 
 .profile__control {
+  width: 100%;
   margin: 24vh 0 auto;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 16px;
   font-size: 13px;
   line-height: 16px;
+}
+
+.profile-form__btn {
+  width: 100%;
+  max-width: 396px;
+  background: #4285F4;
+  border-radius: 3px;
+  border: none;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #fff;
+  padding: 15px;
+  margin: 0;
 }
 
 .profile__edit-btn {
