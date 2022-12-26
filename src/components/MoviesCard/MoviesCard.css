@@ -57,6 +57,17 @@
   border: none;
 }
 
+.card__delite-button-dark {
+  width: 21px;
+  height: 21px;
+  background-image: url('../../images/dislake.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  border: none;
+  opacity: 1;
+}
+
 .card__delite-button:hover {
   background-image: url('../../images/like-active.svg');
 }

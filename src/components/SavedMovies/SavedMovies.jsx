@@ -2,22 +2,65 @@ import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
+import { findShortMovies, filterMovies } from "../../utils/filters";
+import { useState, useEffect } from "react";
+import { api } from '../../utils/MainApi';
 
-function SavedMovies({ isLoading, loggedIn, ...props }) {
+function SavedMovies({ isLoading, loggedIn, savedMovies, setSavedMovies }) {
+
+  const [moviesForRender, setMoviesForRender] = useState([]);
+  const [isShortMovies, setIsShortMovies] = useState(false);
+  const [notFound, setNotFound] = useState(false);
+
+  useEffect(() => setMoviesForRender(savedMovies), [savedMovies]);
+
+  const handleSearchSavedMovies = (isShortMovies, searchQuery) => {
+    const filteredMovies = filterMovies(searchQuery, savedMovies);
+    const filteredShortMovies = findShortMovies(filteredMovies);
+
+    if (isShortMovies) {
+      setMoviesForRender(filteredShortMovies);
+      setNotFound(false);
+      if (filteredShortMovies.length === 0) {
+        setNotFound(true);
+      }
+    } else {
+      setMoviesForRender(filteredMovies);
+      setNotFound(false);
+      if (filteredMovies.length === 0) {
+        setNotFound(true);
+      }
+    }
+  };
+
+  const handleDeleteMovie = (movieId, setIsSaved) => {
+    api
+      .deleteMovie(movieId)
+      .then(() => {
+        setSavedMovies((state) => state.filter((m) => m._id !== movieId));
+        setMoviesForRender((state) => state.filter((m) => m._id !== movieId));
+        localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
+        setIsSaved(false);
+      })
+      .catch((e) => console.log(e));
+  };
+
   return (
     <>
       <Header loggedIn={loggedIn} />
       <main className='movies'>
         <SearchForm isSavedMovies={true}
-          handleSearchSavedMovies={props.handleSearchSavedMovies}
-          isShortMovies={props.isShortMovies}
-          handleShortMovies={props.handleShortMovies} />
+          onSearchSubmit={handleSearchSavedMovies}
+          isShortMovies={isShortMovies}
+          setIsShortMovies={setIsShortMovies} />
         <MoviesCardList isLoading={isLoading}
           isSavedMovies={true}
-          movies={props.movies}
-          notFound={props.notFound}
-          savedMovies={props.savedMovies}
-          handleDeleteMovie={props.handleDeleteMovie} />
+          moviesForRender={moviesForRender}
+          notFound={notFound}
+          savedMovies={savedMovies}
+          movies={savedMovies}
+          handleDeleteMovie={handleDeleteMovie}
+          moviesError={false} />
       </main>
       <Footer />
     </>

@@ -1,36 +1,29 @@
 import './SearchForm.css';
 import FilterCheckbox from './FilterCheckbox/FilterCheckbox';
-import { useState } from 'react';
+import { useValidationForm } from '../../hooks/useValidationForm';
 
-function MovieSearch({ isSavedMovies, ...props }) {
-  const [searchInput, setSearchInput] = useState('');
-  const [isSearchFormValid, setIsSearchFormValid] = useState(true);
+function MovieSearch({ onSearchSubmit, isShortMovies, setIsShortMovies }) {
 
-  function handleChange(e) {
-    setSearchInput(e.target.value);
-    setIsSearchFormValid(e.target.checkValidity());
-  }
+  const { values, handleErrors, errors, isValid } = useValidationForm();
 
-  function onSubmit(e) {
+  function handleShortMovies() {
+    setIsShortMovies(!isShortMovies)
+  };
+
+  function handleSubmit(e) {
     e.preventDefault();
-    props.handleSearchMovies(searchInput);
-  }
-
-  function onSubmitSavedMovies(e) {
-    e.preventDefault();
-    props.handleSearchSavedMovies(searchInput);
+    onSearchSubmit(isShortMovies, values.search);
   }
 
   return (
-    <form className='search' name='search-form' onSubmit={isSavedMovies ? onSubmitSavedMovies : onSubmit}>
+    <form className='search' name='search-form' onSubmit={handleSubmit}>
       <div className='search__container'>
         <input className='search__input' name='search' type='text' required autoComplete='off'
-          placeholder='Фильм' onChange={handleChange} />
-        <button className='search__btn btn__hover' type='submit'>Найти</button>
-        <span className={`register__form_span ${isSearchFormValid && 'register__form_span_hidden'} `}
-        >Это поле обязательно</span>
+          placeholder='Фильм' onChange={handleErrors} />
+        <button className={`search__btn btn__hover ${!isValid && 'search__btn_disabled'}`} type='submit' disabled={!isValid}>Найти</button>
       </div>
-      <FilterCheckbox handleShortMovies={props.handleShortMovies} isShortMovies={props.isShortMovies} />
+      <span className={`search__form_span ${errors.search && 'error'}`}>{errors.search}</span>
+      <FilterCheckbox handleShortMovies={handleShortMovies} isShortMovies={isShortMovies} />
     </form>
   )
 }

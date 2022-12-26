@@ -8,10 +8,20 @@ import { useEffect } from 'react';
 function Profile({ loggedIn, error, isFail, handleUpdateUser, handleLogout }) {
 
   const [isEdit, setIsEdit] = useState(false);
-  const { values, handleErrors, errors } = useValidationForm();
+  const [isDisable, setIsDisable] = useState(true);
+  const { values, handleErrors, errors, isValid } = useValidationForm();
   const currentUser = useContext(CurrentUserContext);
 
   useEffect(() => { if (isFail) { setIsEdit(true) } }, [isFail])
+
+  useEffect(() => {
+    if (values.name !== currentUser.name || values.email !== currentUser.email) {
+      setIsDisable(false)
+    }
+    else {
+      setIsDisable(true)
+    }
+  }, [currentUser.name, currentUser.email, values.name, values.email, setIsDisable])
 
   function handleOnEdit() {
     setIsEdit(!isEdit);
@@ -20,7 +30,8 @@ function Profile({ loggedIn, error, isFail, handleUpdateUser, handleLogout }) {
   function handleSubmit(e) {
     e.preventDefault();
     handleUpdateUser(values.name || currentUser.name, values.email || currentUser.email);
-    handleOnEdit()
+    handleOnEdit();
+    setIsDisable(true);
   }
 
   useEffect(() => { if (isFail) { setIsEdit(true) } }, [isFail])
@@ -48,7 +59,7 @@ function Profile({ loggedIn, error, isFail, handleUpdateUser, handleLogout }) {
           <div className='profile__control'>
             <span className='register-form__span'>{error}</span>
             {isEdit || isFail
-              ? <button type='submit' className='profile-form__btn btn__hover' >Сохранить</button>
+              ? <button type='submit' className={`profile-form__btn btn__hover ${(!isValid || isDisable) && 'profile-form__btn_disabled'}`} disabled={(!isValid || isDisable)}>Сохранить</button>
               : <> <button className='profile__edit-btn link__hover' type='button' onClick={handleOnEdit}>Редактировать</button>
                 <button className='profile__exit-btn link__hover' type='button' onClick={handleLogout}>Выйти из аккаунта</button> </>}
           </div>

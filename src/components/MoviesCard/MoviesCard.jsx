@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import './MoviesCard.css';
+import { getCorrectDuration } from '../../utils/getCorrectDuration';
 import {
   SERVER_URL,
   UNKNOWN_IMAGE_URL,
@@ -18,12 +19,6 @@ function MoviesCard({ savedMovies, isSavedMovies, ...props }) {
     }
   }, [savedMovies, props.id]);
 
-  const getCorrectDuration = (mins) => {
-    let hours = Math.trunc(mins / 60);
-    let minutes = mins % 60;
-    return hours + 'ч ' + minutes + 'м';
-  };
-
   const handleSaveMovie = () => {
     const movieData = {
       country: props.country || UNKNOWN_CARD_TEXT,
@@ -38,30 +33,20 @@ function MoviesCard({ savedMovies, isSavedMovies, ...props }) {
       thumbnail: SERVER_URL + props.image.formats.thumbnail.url || UNKNOWN_IMAGE_URL,
       movieId: props.id,
     };
-    props.handleSaveMovie(movieData);
-    setIsSaved(true);
+    props.handleSaveMovie(movieData, setIsSaved);
   };
 
   function handleDeleteMovie() {
-    setIsSaved(false);
-    console.log(props)
-    props.handleDeleteMovie(props._id);
-  }
-
-  function handleDislikeMovie() {
-    const savedMovies = JSON.parse(localStorage.getItem('savedMovies'));
-    const card = savedMovies.find((movie) => movie.movieId === props.id);
-    props.handleDeleteMovie(card._id);
-    setIsSaved(false);
+    props.handleDeleteMovie(props._id || props.id, setIsSaved);
   }
 
   return (
     <li className='card'>
       {isSavedMovies ?
-        <button className='card__delite-button card__btn  btn__hover' type='button' aria-label='Удалить' onClick={handleDeleteMovie} />
+        <button className='card__delite-button-dark card__btn  btn__hover' type='button' aria-label='Удалить' onClick={handleDeleteMovie} />
         : !isSaved
           ? <button className='card__save-button card__btn  btn__hover' type="button" aria-label="Сохранить" onClick={handleSaveMovie}>Сохранить</button>
-          : <button className='card__delite-button card__btn  btn__hover' type='button' aria-label='Удалить' onClick={handleDislikeMovie} />}
+          : <button className='card__delite-button card__btn  btn__hover' type='button' aria-label='Удалить' onClick={handleDeleteMovie} />}
       <a className='card__link' href={props.trailerLink} target='_blank' rel='noreferrer'>
         <img src={isSavedMovies ? props.image : SERVER_URL + props.image.url} alt={props.nameRU} className='card__image' />
       </a>

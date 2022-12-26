@@ -20,8 +20,6 @@ import {
 } from '../../utils/constants';
 import { api } from '../../utils/MainApi';
 import { auth } from '../../utils/auth';
-import * as moviesApi from '../../utils/MoviesApi'
-
 
 function App() {
 
@@ -30,16 +28,9 @@ function App() {
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = React.useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [movies, setMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
-  const [apiMovies, setApiMovies] = useState([]);
-  const [isShortMovies, setIsShortMovies] = useState(false);
-  const [notFound, setNotFound] = useState(false);
-  const [moviesError, setMoviesError] = useState(false);
   const [error, setError] = useState(' ');
   const [isFail, setIsFail] = useState(false);
-
 
   useEffect(() => {
     if (token) {
@@ -54,31 +45,23 @@ function App() {
 
   useEffect(() => {
     if (isLoggedIn) {
-      api.getUserInfo()
+      auth.getContent(token)
         .then(res => setCurrentUser(res.data))
+        .catch((err) => {
+          localStorage.clear();
+          setIsLoggedIn(false);
+          setError(' ');
+          navigate('/');
+          console.log(err);
+        });
+      api.getSavedMovies()
+        .then((res) => {
+          setSavedMovies(res.data);
+          localStorage.setItem('savedMovies', JSON.stringify(res.data));
+        })
         .catch(err => console.log(err));
     }
-  }, [isLoggedIn]);
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      const movies = localStorage.getItem('movies');
-      const savedMovies = localStorage.getItem('savedMovies');
-      if (movies) {
-        setMovies(JSON.parse(movies));
-      }
-      if (savedMovies) {
-        setSavedMovies(JSON.parse(savedMovies));
-      } else {
-        api.getSavedMovies()
-          .then((res) => {
-            setSavedMovies(res.data);
-            localStorage.setItem('savedMovies', JSON.stringify(res.data));
-          })
-          .catch(err => console.log(err));
-      }
-    }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, token, navigate, setError]);
 
   function handleError(err) {
     console.log(err)
@@ -104,7 +87,6 @@ function App() {
   function handleLogin(email, password) {
     auth.authorize(email, password)
       .then((res) => {
-        setIsLoading(false)
         setIsLoggedIn(true);
         setCurrentUser(res);
         localStorage.setItem('token', res.token);
@@ -134,99 +116,6 @@ function App() {
     navigate('/');
   };
 
-  function handleShortMovies() {
-    setIsShortMovies(!isShortMovies);
-  };
-
-  function searchMovies(keyword) {
-    setIsLoading(true);
-    setMovies([]);
-    setNotFound(false);
-    setMoviesError(false);
-
-    if (apiMovies.length === 0) {
-      moviesApi.getMovies()
-        .then(res => {
-          setApiMovies(res);
-          const searchResult = searchMoviesByKeyword(res, keyword);
-
-          if (searchResult.length === 0) {
-            setNotFound(true);
-            setMovies([]);
-          } else {
-            localStorage.setItem('movies', JSON.stringify(searchResult));
-            setMovies(JSON.parse(localStorage.getItem('movies')));
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          setMoviesError(true);
-          setMovies([]);
-        })
-        .finally(() => {
-          setIsLoading(false);
-        })
-    } else {
-      const searchResult = searchMoviesByKeyword(apiMovies, keyword);
-
-      if (searchResult.length === 0) {
-        setMovies([]);
-        setIsLoading(false);
-        setNotFound(true);
-      } else if (searchResult.length !== 0) {
-        localStorage.setItem('movies', JSON.stringify(searchResult));
-        setMovies(JSON.parse(localStorage.getItem('movies')));
-        setIsLoading(false);
-      } else {
-        setMovies([]);
-        setMoviesError(true);
-      }
-    }
-  };
-
-  function searchMoviesByKeyword(movies, keyword) {
-    let foundMovies = [];
-
-    movies.forEach((movie) => {
-      if (movie.nameRU.indexOf(keyword) > -1) {
-        if (isShortMovies) {
-          movie.duration <= 40 && foundMovies.push(movie);
-        } else {
-          foundMovies.push(movie);
-        }
-      }
-    })
-    return foundMovies;
-  };
-
-  function searchSavedMovies(keyword) {
-    const movies = JSON.parse(localStorage.getItem('savedMovies'));
-    const searchResult = searchMoviesByKeyword(movies, keyword);
-    setSavedMovies(searchResult);
-  };
-
-  function saveMovie(movie) {
-    api.saveMovie(movie)
-      .then((res) => {
-        const movies = [res.data, ...savedMovies];
-        localStorage.setItem('savedMovies', JSON.stringify(movies))
-        setSavedMovies(movies);
-      })
-      .catch(err => console.log(err));
-  };
-
-  function deleteMovie(movieId) {
-    api.deleteMovie(movieId)
-      .then(() => {
-        const filteredSavedMovies = savedMovies.filter((item) => {
-          return item._id !== movieId
-        });
-        setSavedMovies(filteredSavedMovies);
-        localStorage.setItem('savedMovies', JSON.stringify(filteredSavedMovies));
-      })
-      .catch(err => console.log(err));
-  };
-
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="app">
@@ -242,16 +131,8 @@ function App() {
             <ProtectedRoute loggedIn={isLoggedIn}>
               <Movies
                 loggedIn={isLoggedIn}
-                isLoading={isLoading}
-                notFound={notFound}
-                handleSearchMovies={searchMovies}
-                movies={movies}
                 savedMovies={savedMovies}
-                moviesError={moviesError}
-                handleShortMovies={handleShortMovies}
-                isShortMovies={isShortMovies}
-                handleSaveMovie={saveMovie}
-                handleDeleteMovie={deleteMovie} />
+                setSavedMovies={setSavedMovies} />
             </ProtectedRoute>
           }
           />
@@ -259,17 +140,8 @@ function App() {
             <ProtectedRoute loggedIn={isLoggedIn}>
               <SavedMovies
                 loggedIn={isLoggedIn}
-                isLoading={isLoading}
-                notFound={notFound}
-                handleSearchMovies={searchMovies}
-                movies={savedMovies}
                 savedMovies={savedMovies}
-                moviesError={moviesError}
-                handleSearchSavedMovies={searchSavedMovies}
-                handleShortMovies={handleShortMovies}
-                isShortMovies={isShortMovies}
-                handleSaveMovie={saveMovie}
-                handleDeleteMovie={deleteMovie} />
+                setSavedMovies={setSavedMovies} />
             </ProtectedRoute>
           }
           />

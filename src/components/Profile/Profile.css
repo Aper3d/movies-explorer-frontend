@@ -75,6 +75,17 @@
   margin: 0;
 }
 
+.profile-form__btn_disabled {
+  background: #F8F8F8;
+  color: #C2C2C2;
+  cursor: auto;
+}
+
+.profile-form__btn_disabled:hover {
+  opacity: 1;
+  cursor: auto;
+}
+
 .profile__edit-btn {
   border: none;
   background-color: transparent;

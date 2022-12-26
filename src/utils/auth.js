@@ -41,3 +41,7 @@ class Auth {
 export const auth = new Auth({
   url: 'https://api.legion3d.students.nomoredomainssbs.ru',
 })
+
+// export const auth = new Auth({
+//   url: 'http://localhost:3000',
+// })

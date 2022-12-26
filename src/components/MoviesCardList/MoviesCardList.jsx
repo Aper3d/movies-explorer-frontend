@@ -34,22 +34,11 @@ function MoviesCardList({ isLoading, ...props }) {
     }
   }, [width]);
 
-  useEffect(() => {
-    window.addEventListener("beforeunload", removeAllMoviesData);
-    return () => {
-      window.removeEventListener("beforeunload", removeAllMoviesData);
-    };
-  }, []);
-
-  function removeAllMoviesData() {
-    localStorage.removeItem('movies');
-  }
-
   function handleAddMovies() {
     setInitialCards(prev => prev + addCardsAmount);
   }
 
-  const renderedMovies = props.movies.slice(0, initialCardsAmount);
+  const renderedMovies = props.moviesForRender.slice(0, initialCardsAmount);
 
   return (
     <>
