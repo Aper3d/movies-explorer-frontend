@@ -59,6 +59,7 @@
   gap: 16px;
   font-size: 13px;
   line-height: 16px;
+  position: relative;
 }
 
 .profile-form__btn {

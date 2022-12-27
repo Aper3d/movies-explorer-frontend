@@ -30,23 +30,27 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [savedMovies, setSavedMovies] = useState([]);
   const [error, setError] = useState(' ');
-  const [isFail, setIsFail] = useState(false);
 
   useEffect(() => {
     if (token) {
-      setIsLoggedIn(true);
-      if (location.pathname === "/signup" || location.pathname === "/signin") {
-        navigate("/movies");
-      } else {
-        navigate(location.pathname);
-      }
-    }
-  }, [token, isLoggedIn, navigate, location.pathname]);
-
-  useEffect(() => {
-    if (isLoggedIn) {
       auth.getContent(token)
-        .then(res => setCurrentUser(res.data))
+        .then((res) => {
+          setCurrentUser(res.data)
+          setIsLoggedIn(true)
+          if (location.pathname === "/signup" || location.pathname === "/signin") {
+            navigate("/movies");
+          } else {
+            navigate(location.pathname);
+          }
+        })
+        .then(() => {
+          api.getSavedMovies()
+            .then((res) => {
+              setSavedMovies(res.data);
+              localStorage.setItem('savedMovies', JSON.stringify(res.data));
+            })
+            .catch(err => console.log(err));
+        })
         .catch((err) => {
           localStorage.clear();
           setIsLoggedIn(false);
@@ -54,14 +58,8 @@ function App() {
           navigate('/');
           console.log(err);
         });
-      api.getSavedMovies()
-        .then((res) => {
-          setSavedMovies(res.data);
-          localStorage.setItem('savedMovies', JSON.stringify(res.data));
-        })
-        .catch(err => console.log(err));
     }
-  }, [isLoggedIn, token, navigate, setError]);
+  }, [isLoggedIn, token, navigate, setError, location.pathname]);
 
   function handleError(err) {
     console.log(err)
@@ -100,12 +98,14 @@ function App() {
     api.editProfile(name, email)
       .then((res) => {
         setCurrentUser(res);
-        setError(' ');
-        setIsFail(false);
+        setError('Данные успешно обновленны!');
+        setTimeout(() => { setError(' ') }, 5000)
       })
       .catch((err) => {
         handleError(err);
-        setIsFail(true);
+        (err === '401')
+          ? handleLogout()
+          : console.log(err)
       });
   };
 
@@ -132,7 +132,8 @@ function App() {
               <Movies
                 loggedIn={isLoggedIn}
                 savedMovies={savedMovies}
-                setSavedMovies={setSavedMovies} />
+                setSavedMovies={setSavedMovies}
+                handleLogout={handleLogout} />
             </ProtectedRoute>
           }
           />
@@ -141,7 +142,8 @@ function App() {
               <SavedMovies
                 loggedIn={isLoggedIn}
                 savedMovies={savedMovies}
-                setSavedMovies={setSavedMovies} />
+                setSavedMovies={setSavedMovies}
+                handleLogout={handleLogout} />
             </ProtectedRoute>
           }
           />
@@ -150,7 +152,6 @@ function App() {
               <Profile
                 error={error}
                 loggedIn={isLoggedIn}
-                isFail={isFail}
                 handleUpdateUser={handleUpdateUser}
                 handleLogout={handleLogout}
               />

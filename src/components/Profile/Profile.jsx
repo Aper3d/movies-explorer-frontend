@@ -5,14 +5,12 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { useValidationForm } from '../../hooks/useValidationForm';
 import { useEffect } from 'react';
 
-function Profile({ loggedIn, error, isFail, handleUpdateUser, handleLogout }) {
+function Profile({ loggedIn, error, handleUpdateUser, handleLogout }) {
 
   const [isEdit, setIsEdit] = useState(false);
   const [isDisable, setIsDisable] = useState(true);
   const { values, handleErrors, errors, isValid } = useValidationForm();
   const currentUser = useContext(CurrentUserContext);
-
-  useEffect(() => { if (isFail) { setIsEdit(true) } }, [isFail])
 
   useEffect(() => {
     if (values.name !== currentUser.name || values.email !== currentUser.email) {
@@ -33,8 +31,6 @@ function Profile({ loggedIn, error, isFail, handleUpdateUser, handleLogout }) {
     handleOnEdit();
     setIsDisable(true);
   }
-
-  useEffect(() => { if (isFail) { setIsEdit(true) } }, [isFail])
 
   return (
     <>
@@ -57,8 +53,8 @@ function Profile({ loggedIn, error, isFail, handleUpdateUser, handleLogout }) {
             <span className='register-form__span'>{errors.email}</span>
           </div>
           <div className='profile__control'>
-            <span className='register-form__span'>{error}</span>
-            {isEdit || isFail
+            <span className='register-form__error'>{error}</span>
+            {isEdit
               ? <button type='submit' className={`profile-form__btn btn__hover ${(!isValid || isDisable) && 'profile-form__btn_disabled'}`} disabled={(!isValid || isDisable)}>Сохранить</button>
               : <> <button className='profile__edit-btn link__hover' type='button' onClick={handleOnEdit}>Редактировать</button>
                 <button className='profile__exit-btn link__hover' type='button' onClick={handleLogout}>Выйти из аккаунта</button> </>}

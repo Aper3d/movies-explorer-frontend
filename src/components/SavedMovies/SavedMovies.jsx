@@ -6,7 +6,7 @@ import { findShortMovies, filterMovies } from "../../utils/filters";
 import { useState, useEffect } from "react";
 import { api } from '../../utils/MainApi';
 
-function SavedMovies({ isLoading, loggedIn, savedMovies, setSavedMovies }) {
+function SavedMovies({ isLoading, loggedIn, savedMovies, setSavedMovies, handleLogout }) {
 
   const [moviesForRender, setMoviesForRender] = useState([]);
   const [isShortMovies, setIsShortMovies] = useState(false);
@@ -15,9 +15,9 @@ function SavedMovies({ isLoading, loggedIn, savedMovies, setSavedMovies }) {
   useEffect(() => setMoviesForRender(savedMovies), [savedMovies]);
 
   const handleSearchSavedMovies = (isShortMovies, searchQuery) => {
+    setNotFound(false);
     const filteredMovies = filterMovies(searchQuery, savedMovies);
     const filteredShortMovies = findShortMovies(filteredMovies);
-
     if (isShortMovies) {
       setMoviesForRender(filteredShortMovies);
       setNotFound(false);
@@ -42,7 +42,11 @@ function SavedMovies({ isLoading, loggedIn, savedMovies, setSavedMovies }) {
         localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
         setIsSaved(false);
       })
-      .catch((e) => console.log(e));
+      .catch((err) => {
+        (err === '401')
+          ? handleLogout()
+          : console.log(err)
+      });
   };
 
   return (

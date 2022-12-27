@@ -46,13 +46,21 @@
   color: #EE3465;
 }
 
-.register__form_span_hidden {
-  opacity: 0;
+.register-form__error {
+  margin-top: 10px;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #EE3465;
+  position: absolute;
+  top: -70%;
+  left: auto;
 }
 
 .register-form__control {
   width: 100%;
   margin: 20vh 0 14px;
+  position: relative;
 }
 
 .register-form__btn {

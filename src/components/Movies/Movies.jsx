@@ -8,7 +8,7 @@ import { api } from '../../utils/MainApi';
 import * as moviesApi from '../../utils/MoviesApi'
 import { getOneIdByAnother } from '../../utils/getOneIdByAnother';
 
-function Movies({ loggedIn, savedMovies, setSavedMovies }) {
+function Movies({ loggedIn, savedMovies, setSavedMovies, handleLogout }) {
 
   const [isLoading, setIsLoading] = useState(false);
   const [moviesForRender, setMoviesForRender] = useState([]);
@@ -75,7 +75,11 @@ function Movies({ loggedIn, savedMovies, setSavedMovies }) {
         setSavedMovies((state) => state.filter((m) => m._id !== idInSavedMovies));
         localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
       })
-      .catch((e) => console.log(e));
+      .catch((err) => {
+        (err === '401')
+          ? handleLogout()
+          : console.log(err)
+      });
   };
 
   const handleSaveMovie = (movie, setIsSaved) => {
@@ -86,7 +90,11 @@ function Movies({ loggedIn, savedMovies, setSavedMovies }) {
         setSavedMovies(movies);
         setIsSaved(true);
       })
-      .catch(err => console.log(err));
+      .catch((err) => {
+        (err === '401')
+          ? handleLogout()
+          : console.log(err)
+      });
   };
 
   return (

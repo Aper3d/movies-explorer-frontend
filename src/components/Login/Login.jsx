@@ -26,7 +26,7 @@ function Login({ error, handleLogin }) {
           required autoComplete='off' onChange={handleErrors} />
         <span className='register-form__span'>{errors.password}</span>
         <div className='register-form__control'>
-          <span className='register-form__span'>{error}</span>
+          <span className='register-form__error'>{error}</span>
           <button type='submit' className={`register-form__btn btn__hover ${!isValid && 'register-form__btn_disabled'}`}
             disabled={!isValid}>Войти</button>
         </div>
