@@ -52,7 +52,8 @@ function SavedMovies({ isLoading, loggedIn, savedMovies, setSavedMovies }) {
         <SearchForm isSavedMovies={true}
           onSearchSubmit={handleSearchSavedMovies}
           isShortMovies={isShortMovies}
-          setIsShortMovies={setIsShortMovies} />
+          setIsShortMovies={setIsShortMovies}
+          lastReqest={''} />
         <MoviesCardList isLoading={isLoading}
           isSavedMovies={true}
           moviesForRender={moviesForRender}

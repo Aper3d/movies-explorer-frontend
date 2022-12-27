@@ -1,10 +1,17 @@
 import './SearchForm.css';
 import FilterCheckbox from './FilterCheckbox/FilterCheckbox';
 import { useValidationForm } from '../../hooks/useValidationForm';
+import { useEffect } from 'react';
 
-function MovieSearch({ onSearchSubmit, isShortMovies, setIsShortMovies }) {
+function MovieSearch({ onSearchSubmit, isShortMovies, setIsShortMovies, lastSearchQuery, isLoading }) {
 
-  const { values, handleErrors, errors, isValid } = useValidationForm();
+  const { values, handleErrors, errors } = useValidationForm();
+
+  useEffect(() => {
+    if (lastSearchQuery) {
+      values.search = lastSearchQuery;
+    }
+  })
 
   function handleShortMovies() {
     setIsShortMovies(!isShortMovies)
@@ -19,8 +26,8 @@ function MovieSearch({ onSearchSubmit, isShortMovies, setIsShortMovies }) {
     <form className='search' name='search-form' onSubmit={handleSubmit}>
       <div className='search__container'>
         <input className='search__input' name='search' type='text' required autoComplete='off'
-          placeholder='Фильм' onChange={handleErrors} />
-        <button className={`search__btn btn__hover ${!isValid && 'search__btn_disabled'}`} type='submit' disabled={!isValid}>Найти</button>
+          placeholder='Фильм' onChange={handleErrors} value={values['search'] || ''} />
+        <button className={`search__btn btn__hover ${isLoading && 'search__btn_disabled'}`} type='submit' disabled={isLoading}>Найти</button>
       </div>
       <span className={`search__form_span ${errors.search && 'error'}`}>{errors.search}</span>
       <FilterCheckbox handleShortMovies={handleShortMovies} isShortMovies={isShortMovies} />

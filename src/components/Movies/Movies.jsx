@@ -3,7 +3,7 @@ import Footer from '../Footer/Footer';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import { findShortMovies, filterMovies } from "../../utils/filters";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { api } from '../../utils/MainApi';
 import * as moviesApi from '../../utils/MoviesApi'
 import { getOneIdByAnother } from '../../utils/getOneIdByAnother';
@@ -13,11 +13,25 @@ function Movies({ loggedIn, savedMovies, setSavedMovies }) {
   const [isLoading, setIsLoading] = useState(false);
   const [moviesForRender, setMoviesForRender] = useState([]);
   const [isShortMovies, setIsShortMovies] = useState(false);
+  const [lastSearchQuery, setLastSearchQuery] = useState('');
   const [notFound, setNotFound] = useState(false);
   const [moviesError, setMoviesError] = useState(false);
+  const requestData = localStorage.getItem('requestData');
+
+  useEffect(() => {
+    if (requestData) {
+      const downloadRequest = JSON.parse(requestData);
+      setLastSearchQuery(downloadRequest.searchQuery);
+      setIsShortMovies(downloadRequest.isShortMovies);
+      downloadRequest.isShortMovies
+        ? setMoviesForRender(downloadRequest.filteredShortMovies)
+        : setMoviesForRender(downloadRequest.filteredMovies)
+    }
+  }, [requestData]);
 
   const handleSearchMovies = (isShortMovies, searchQuery) => {
     setIsLoading(true);
+    setMoviesForRender([]);
     moviesApi.getMovies()
       .then((res) => {
         const apiMovies = res;
@@ -34,12 +48,22 @@ function Movies({ loggedIn, savedMovies, setSavedMovies }) {
             setNotFound(true);
           }
         };
-        setIsLoading(false);
+        const requestData = {
+          searchQuery,
+          isShortMovies,
+          filteredMovies,
+          filteredShortMovies,
+        };
+        localStorage.setItem('requestData', JSON.stringify(requestData));
+        setMoviesError(false);
       })
       .catch((err) => {
         console.log(err);
         setMoviesError(true);
       })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   const handleDeleteMovie = (movieId, setIsSaved) => {
@@ -72,7 +96,9 @@ function Movies({ loggedIn, savedMovies, setSavedMovies }) {
         <SearchForm isSavedMovies={false}
           onSearchSubmit={handleSearchMovies}
           isShortMovies={isShortMovies}
-          setIsShortMovies={setIsShortMovies} />
+          setIsShortMovies={setIsShortMovies}
+          lastSearchQuery={lastSearchQuery}
+          isLoading={isLoading} />
         <MoviesCardList isLoading={isLoading}
           isSavedMovies={false}
           moviesForRender={moviesForRender}
