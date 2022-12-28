@@ -46,7 +46,7 @@ function Profile({ loggedIn, error, handleUpdateUser, handleLogout }) {
             />
             <span className='register-form__span'>{errors.name}</span>
             <label htmlFor="email" className='profile__input-label'>E-mail</label>
-            <input className='profile__input' type='email' name='email' required
+            <input className='profile__input' type='email' pattern='^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$' name='email' required
               autoComplete="off" onChange={handleErrors} disabled={!isEdit}
               defaultValue={currentUser.email}
             />
