@@ -23,7 +23,8 @@ function Register({ error, handleRegister }) {
         />
         <span className='register-form__span'>{errors.name}</span>
         <label className='register-form__name'>E-mail</label>
-        <input type='email' name='email' placeholder='Ваш e-mail' value={values.email || ''}
+        <input type='email' pattern='^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
+          name='email' placeholder='Ваш e-mail' value={values.email || ''}
           className={`register-form__input ${errors.name && 'error'}`}
           required autoComplete='off' onChange={handleErrors} />
         <span className='register-form__span'>{errors.email}</span>
@@ -33,7 +34,7 @@ function Register({ error, handleRegister }) {
           required autoComplete='off' onChange={handleErrors} />
         <span className='register-form__span'>{errors.password}</span>
         <div className='register-form__control'>
-          <span className='register-form__span'>{error}</span>
+          <span className='register-form__error'>{error}</span>
           <button type='submit' className={`register-form__btn btn__hover ${!isValid && 'register-form__btn_disabled'}`}
             disabled={!isValid}>Зарегстрироваться</button>
         </div>

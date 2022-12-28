@@ -1,9 +1,9 @@
-import React from 'react';
+import { useState } from "react";
 
 export function useValidationForm() {
-  const [errors, setErrors] = React.useState({});
-  const [values, setValues] = React.useState({});
-  const [isValid, setIsValid] = React.useState(false);
+  const [errors, setErrors] = useState({});
+  const [values, setValues] = useState({});
+  const [isValid, setIsValid] = useState(false);
 
 
   function handleErrors(e) {
@@ -15,3 +15,4 @@ export function useValidationForm() {
 
   return { values, setValues, errors, isValid, handleErrors };
 }
+
